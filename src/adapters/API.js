@@ -5,6 +5,7 @@ const getPokemon = () => fetch(pokemonURL).then(res => res.json())
 
 const formatPokemonPost = pokemon => ({
   "name": pokemon.name,
+  "id": pokemon.id,
   "stats": [
     {
       "value": pokemon.hp,
