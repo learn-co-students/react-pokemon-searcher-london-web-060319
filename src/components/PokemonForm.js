@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 
-class PokemonForm extends React.Component {
+export default class PokemonForm extends React.Component {
   constructor() {
     super()
 
@@ -13,11 +13,25 @@ class PokemonForm extends React.Component {
     }
   }
 
+  changeState = (key, value) => this.setState({
+    [key]: value
+  })
+
+  handleSubmit = () => {
+    this.props.onSubmit(this.state)
+    this.setState({
+      name: '',
+      hp: '',
+      frontUrl: '',
+      backUrl: ''
+    })
+  }
+
   render() {
     return (
       <div>
         <h3>Add a Pokemon!</h3>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} onChange={e => this.changeState(e.target.name, e.target.value)} >
           <Form.Group widths="equal">
             <Form.Input fluid label="Name" placeholder="Name" name="name" />
             <Form.Input fluid label="hp" placeholder="hp" name="hp" />
@@ -30,5 +44,3 @@ class PokemonForm extends React.Component {
     )
   }
 }
-
-export default PokemonForm

@@ -3,21 +3,47 @@ import PokemonCollection from './PokemonCollection'
 import PokemonForm from './PokemonForm'
 import { Search } from 'semantic-ui-react'
 import _ from 'lodash'
+import API from '../adapters/API'
 
-class PokemonPage extends React.Component {
+class PokemonIndex extends React.Component {
+
+  state = {
+    pokemons: [],
+    searchTerm: ''
+  }
+
+  componentDidMount() {
+    API.getPokemon()
+    .then(pokemons => this.setState({ pokemons }))
+  }
+
+  updateSearchTerm = searchTerm => this.setState({ searchTerm })
+  
+  filterPokemon = () => this.state.pokemons.filter(
+    pokemon => pokemon.name.toLocaleLowerCase().includes(this.state.searchTerm.toLocaleLowerCase())
+  )
+
+  addPokemon = newPokemon => {
+    API.postPokemon(newPokemon)
+      .then(pokemon => this.setState({
+        pokemons: [...this.state.pokemons, pokemon]
+      }))
+  }
+
   render() {
+    const pokemons = this.filterPokemon()
     return (
       <div>
         <h1>Pokemon Searcher</h1>
         <br />
-        <Search onSearchChange={_.debounce(() => console.log('🤔'), 500)} showNoResults={false} />
+        <Search onSearchChange={(e, {value}) => this.updateSearchTerm(value)} showNoResults={false} value={this.state.searchTerm} />
         <br />
-        <PokemonCollection />
+        <PokemonCollection pokemons={pokemons} />
         <br />
-        <PokemonForm />
+        <PokemonForm onSubmit={this.addPokemon} />
       </div>
     )
   }
 }
 
-export default PokemonPage
+export default PokemonIndex
