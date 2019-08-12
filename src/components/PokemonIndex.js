@@ -2,7 +2,6 @@ import React from 'react'
 import PokemonCollection from './PokemonCollection'
 import PokemonForm from './PokemonForm'
 import { Search } from 'semantic-ui-react'
-import _ from 'lodash'
 import API from '../adapters/API'
 import PokemonSort from './PokemonSort';
 import PokemonTypeFilter from './PokemonTypeFilter';
@@ -16,19 +15,25 @@ class PokemonIndex extends React.Component {
       'Name',
       'Id'
     ],
-    typeFilterOptions: [
-      'poison',
-      'grass',
-      'fire',
-      'bug',
-      'electric',
-      'water',
-      'fairy',
+    types: [
       'normal',
-      'ground',
+      'fire',
+      'water',
+      'electric',
+      'grass',
+      'ice',
       'fighting',
+      'poison',
+      'ground',
+      'flying',
+      'psychic',
+      'bug',
+      'rock',
+      'ghost',
       'dragon',
-      'ghost'
+      'dark',
+      'steel',
+      'fairy'
     ],
     typeFilter: undefined,
     sortOption: 'Default',
@@ -71,8 +76,14 @@ class PokemonIndex extends React.Component {
     pokemon => this.state.typeFilter ? pokemon.types && pokemon.types.includes(this.state.typeFilter) : true
   )
 
-  changeTypeFilter = typeFilter => this.setState({ typeFilter })
+  changeTypeFilter = newTypeFilter => (newTypeFilter === this.state.typeFilter ? this.setState({ ['typeFilter']: undefined }) : this.setState({ ['typeFilter']: newTypeFilter }))
 
+  deletePokemon = id => {
+    API.deletePokemon(id)
+      .then(this.setState({
+        pokemons: this.state.pokemons.filter(pokemon => pokemon.id !== id)
+      }))
+  }
 
   render() {
     const fp = this.filterPokemon(this.state.pokemons)
@@ -85,18 +96,24 @@ class PokemonIndex extends React.Component {
         <h1>Pokemon Searcher</h1>
         <br />
         <div>
-          <PokemonTypeFilter 
-          handleChange={this.changeTypeFilter} 
-          filterOption={this.state.typeFilter} 
-          filterOptions={this.state.typeFilterOptions}
+          <PokemonTypeFilter
+            handleChange={this.changeTypeFilter}
+            filterOption={this.state.typeFilter}
+            filterOptions={this.state.types}
           />
+          <br />
           <PokemonSort sortOptions={this.state.sortOptions} changeSort={this.changeSort} sortOption={this.state.sortOption} />
-          <Search onSearchChange={(e, { value }) => this.updateSearchTerm(value)} showNoResults={false} value={this.state.searchTerm} />
+          <br />
+          <div><br />
+            <Search onSearchChange={(e, { value }) => this.updateSearchTerm(value)} showNoResults={false} value={this.state.searchTerm} />
+          </div>
         </div>
         <br />
-        <PokemonCollection pokemons={pokemons} />
+        <PokemonForm types={this.state.types} onSubmit={this.addPokemon} />
         <br />
-        <PokemonForm onSubmit={this.addPokemon} />
+        <div>
+          <PokemonCollection pokemons={pokemons} deletePokemon={this.deletePokemon} />
+        </div>
       </div>
     )
   }

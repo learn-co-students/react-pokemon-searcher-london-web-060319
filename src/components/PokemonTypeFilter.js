@@ -1,28 +1,27 @@
 import React from 'react'
-import { Form, Checkbox } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 
-export default function PokemonTypeFilter({ filterOption, filterOptions, handleChange, changeTypeFilter }) {
+export default function PokemonTypeFilter({ filterOption, filterOptions, handleChange }) {
   return (
     <div>
       <Form>
-        <Form.Field>
-          Selected type: <b>{filterOption}</b>
-        </Form.Field>
-        <Form.Field>
+        <div className="ui buttons">
           {
             filterOptions.map(type =>
-              
-              <Checkbox
-                radio
-                label={type}
-                name='checkboxRadioGroup'
-                value={type}
-                checked={type === filterOption}
-                onChange={(e, {value}) => handleChange(value)}
-              />
+              <Button
+                key={type}
+                className={`${type} ${filterOption === type ? 'selected' : ''}`}
+                onClick={(e, { value }) => handleChange(type)}
+              >{type}</Button>
             )
           }
-        </Form.Field>
+        </div>
+        {
+          filterOption ?
+            <Form.Field>
+              Selected type: <b>{filterOption}</b>
+            </Form.Field> : <Form.Field />
+        }
       </Form>
     </div>
   )
