@@ -21,3 +21,102 @@
 .App-intro {
   font-size: large;
 }
+
+.normal {
+  background-color: #A8A77A !important;
+  color: white;
+} 
+
+.fire {
+  background-color: #EE8130 !important;
+  color: white;
+} 
+
+.water {
+  background-color: #6390F0 !important;
+  color: white;
+} 
+
+.electric {
+  background-color: #F7D02C !important;
+  color: white;
+} 
+
+.grass {
+  background-color: #7AC74C !important;
+  color: white;
+} 
+
+.ice {
+  background-color: #96D9D6 !important;
+  color: white;
+} 
+
+.fighting {
+  background-color: #C22E28 !important;
+  color: white;
+} 
+
+.poison {
+  background-color: #A33EA1 !important;
+  color: white;
+} 
+
+.ground {
+  background-color: #E2BF65 !important;
+  color: white;
+} 
+
+.flying {
+  background-color: #A98FF3 !important;
+  color: white;
+} 
+
+.psychic {
+  background-color: #F95587 !important;
+  color: white;
+} 
+
+.bug {
+  background-color: #A6B91A !important;
+  color: white;
+} 
+
+.rock {
+  background-color: #B6A136 !important;
+  color: white;
+} 
+
+.ghost {
+  background-color: #735797 !important;
+  color: white;
+} 
+
+.dragon {
+  background-color: #6F35FC !important;
+  color: white;
+} 
+
+.dark {
+  background-color: #705746 !important;
+  color: white;
+} 
+
+.steel {
+  background-color: #B7B7CE !important;
+  color: white;
+} 
+
+.fairy {
+  background-color: #D685AD !important;
+  color: white;
+} 
+
+button.ui.button.selected {
+  border: #e6e6e6 solid;
+  font-weight: bolder;
+}
+
+.ui.buttons {
+  flex-wrap: wrap;
+}
